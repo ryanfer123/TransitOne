@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>TransitOne - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#dde3e7",
+                    "surface-container-lowest": "#080f12",
+                    "surface": "#0e1417",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed-dim": "#3cd7ff",
+                    "error-container": "#93000a",
+                    "surface-container-high": "#242b2e",
+                    "on-primary-container": "#00586b",
+                    "on-surface-variant": "#bbc9cf",
+                    "on-tertiary-fixed-variant": "#604100",
+                    "surface-tint": "#3cd7ff",
+                    "on-secondary-fixed-variant": "#354767",
+                    "surface-container": "#1a2123",
+                    "outline": "#859398",
+                    "inverse-primary": "#00677e",
+                    "secondary-fixed": "#d6e3ff",
+                    "inverse-on-surface": "#2b3134",
+                    "tertiary-container": "#feb528",
+                    "on-secondary": "#1e304f",
+                    "on-secondary-container": "#a3b6db",
+                    "secondary-fixed-dim": "#b5c7ed",
+                    "secondary-container": "#354767",
+                    "on-tertiary-container": "#6c4900",
+                    "primary": "#a8e8ff",
+                    "on-primary-fixed": "#001f27",
+                    "on-primary-fixed-variant": "#004e5f",
+                    "tertiary-fixed": "#ffdeae",
+                    "secondary": "#b5c7ed",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed": "#061b39",
+                    "background": "#0e1417",
+                    "on-background": "#dde3e7",
+                    "primary-container": "#00d4ff",
+                    "on-primary": "#003642",
+                    "surface-container-highest": "#2f3639",
+                    "outline-variant": "#3c494e",
+                    "on-error": "#690005",
+                    "tertiary": "#ffd9a1",
+                    "surface-bright": "#333a3d",
+                    "surface-dim": "#0e1417",
+                    "on-surface": "#dde3e7",
+                    "on-tertiary-fixed": "#281900",
+                    "tertiary-fixed-dim": "#ffba3d",
+                    "primary-fixed": "#b4ebff",
+                    "surface-container-low": "#161d1f",
+                    "on-tertiary": "#432c00",
+                    "surface-variant": "#2f3639",
+                    "brand-navy": "#0F1F3D"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sheet-full": "95vh",
+                    "touch-target-min": "44px",
+                    "unit": "4px",
+                    "sheet-peek": "80px",
+                    "margin-edge": "16px",
+                    "sheet-half": "50vh",
+                    "gutter": "12px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "metadata": ["Inter"],
+                    "label-eta": ["JetBrains Mono"],
+                    "title-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-data": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "metadata": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "label-eta": ["20px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                    "title-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-data": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #0F1F3D; overflow: hidden; }
+        .map-container { height: 55vh; width: 100%; position: relative; }
+        .bottom-sheet { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            height: 50vh; 
+            background: #162947; 
+            border-top: 1px solid #1E3A8A; 
+            z-index: 40;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+        }
+        .pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.5); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        .cyan-glow { box-shadow: 0px 0px 12px rgba(0, 212, 255, 0.2); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .active-route-ring {
+            border: 2px solid transparent;
+            border-top-color: #3cd7ff;
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 flex items-center justify-between px-margin-edge h-14">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-highest/50 transition-colors p-2 rounded-full active:scale-95 duration-150" data-icon="menu">menu</button>
+<h1 class="font-label-eta text-label-eta tracking-tighter text-primary dark:text-primary">TransitOne</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary hover:bg-surface-container-highest/50 transition-colors p-2 rounded-full active:scale-95 duration-150" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<!-- Map Canvas (Placeholder for Visual) -->
+<main class="relative h-screen w-full">
+<div class="map-container overflow-hidden">
+<img alt="City Map" class="w-full h-full object-cover grayscale brightness-50 opacity-40" data-alt="A highly detailed dark-themed satellite map of a sprawling urban landscape at night. The city's grid is illuminated by thin, glowing lines of teal and amber representing transit corridors. The aesthetic is ultra-modern and technical, resembling a high-tech control room display. The overall lighting is low-key with high-contrast neon accents, dominated by deep navy and charcoal tones." data-location="Mumbai" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8E537G0Ry2J0Lb9FosIhQDRpwu2TyjYzCQa_G98uJGyl-KRXRCweikeD2DxDLsm9mfmmW_giwaK3Ki1T91vq3tywUFpoxcpv5GoJZgYWMJFbTALa1CtKPuNYcmYg2kE-celsxiZP62Wk5J_o0ib2AqEMlI-7n7_ytL3tjpFPMMFlDjrBTmZzPW_l9pJM4J375aTUKPENyMJ8CB9wvU49oiyICx3mmf92WZmMNWMkZK5G8jIW0vpHbcg"/>
+<!-- Animated Dots -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- Metro Dots (Teal) -->
+<div class="live-dot bg-primary-container pulse" style="top: 30%; left: 40%;"></div>
+<div class="live-dot bg-primary-container pulse" style="top: 45%; left: 55%;"></div>
+<!-- Bus Dots (Amber) -->
+<div class="live-dot bg-tertiary-container pulse" style="top: 25%; left: 60%;"></div>
+<div class="live-dot bg-tertiary-container pulse" style="top: 60%; left: 30%;"></div>
+<!-- Train Dots (Indigo) -->
+<div class="live-dot bg-secondary-fixed-dim pulse" style="top: 50%; left: 20%;"></div>
+</div>
+<!-- Global Search Overlay -->
+<div class="absolute top-20 left-4 right-4 z-20">
+<div class="bg-surface-container-low/80 backdrop-blur-md border border-outline-variant/30 rounded-xl p-3 flex items-center gap-3 shadow-2xl focus-within:border-primary-container transition-all">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-transparent border-none text-on-surface focus:ring-0 w-full font-title-sm" placeholder="Where to?" type="text"/>
+<span class="material-symbols-outlined text-outline" data-icon="mic">mic</span>
+</div>
+</div>
+</div>
+<!-- Saved Routes Widget (Bento Style) -->
+<div class="absolute top-[48%] left-4 right-4 z-30 grid grid-cols-2 gap-3">
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant/20 shadow-lg flex items-center gap-3">
+<div class="relative w-10 h-10 flex items-center justify-center">
+<div class="absolute inset-0 rounded-full active-route-ring"></div>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="home">home</span>
+</div>
+<div>
+<p class="font-metadata text-metadata text-on-surface-variant">Work → Home</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-label-data bg-primary-container/20 text-primary px-1.5 py-0.5 rounded border border-primary/20">METRO</span>
+<span class="font-label-eta text-sm text-primary">8m</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 border border-outline-variant/20 shadow-lg flex items-center gap-3">
+<div class="relative w-10 h-10 flex items-center justify-center">
+<div class="absolute inset-0 rounded-full border-2 border-outline-variant/20"></div>
+<span class="material-symbols-outlined text-tertiary text-xl" data-icon="work">work</span>
+</div>
+<div>
+<p class="font-metadata text-metadata text-on-surface-variant">Home → Office</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] font-label-data bg-tertiary-container/20 text-tertiary px-1.5 py-0.5 rounded border border-tertiary/20">BUS</span>
+<span class="font-label-eta text-sm text-tertiary">Delayed</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Sheet / Near You -->
+<div class="bottom-sheet rounded-t-[24px] px-margin-edge pt-4 overflow-y-auto hide-scrollbar pb-24">
+<div class="w-10 h-1 bg-outline-variant/50 rounded-full mx-auto mb-6"></div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Near You</h2>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest/40 p-2 rounded-lg material-symbols-outlined text-sm" data-icon="tune">tune</button>
+<button class="bg-surface-container-highest/40 p-2 rounded-lg material-symbols-outlined text-sm" data-icon="near_me">near_me</button>
+</div>
+</div>
+<!-- Arrival List -->
+<div class="space-y-4">
+<!-- Arrival 1 (Metro) -->
+<div class="flex items-center justify-between p-4 bg-surface-container-high/40 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center border border-primary-container/20">
+<span class="material-symbols-outlined text-primary" data-icon="directions_subway">directions_subway</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-on-surface">Blue Line</h3>
+<p class="font-metadata text-metadata text-on-surface-variant">Towards Dwarka Sec 21 • 4 min walk</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-2 bg-primary-container/20 px-3 py-1.5 rounded-lg border border-primary/30">
+<div class="w-2 h-2 rounded-full bg-primary pulse"></div>
+<span class="font-label-eta text-label-eta text-primary-fixed-dim">03:45</span>
+</div>
+<span class="font-metadata text-[10px] text-primary/70 mt-1 uppercase tracking-widest">LIVE TRACKING</span>
+</div>
+</div>
+<!-- Arrival 2 (Bus) -->
+<div class="flex items-center justify-between p-4 bg-surface-container-high/40 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/10 flex items-center justify-center border border-tertiary-container/20">
+<span class="material-symbols-outlined text-tertiary" data-icon="directions_bus">directions_bus</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-on-surface">Bus 402</h3>
+<p class="font-metadata text-metadata text-on-surface-variant">Towards Huda City • 2 min walk</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-2 bg-tertiary-container/20 px-3 py-1.5 rounded-lg border border-tertiary/30">
+<div class="w-2 h-2 rounded-full bg-tertiary pulse"></div>
+<span class="font-label-eta text-label-eta text-tertiary-fixed-dim">06:20</span>
+</div>
+<span class="font-metadata text-[10px] text-tertiary/70 mt-1 uppercase tracking-widest">LIVE TRACKING</span>
+</div>
+</div>
+<!-- Arrival 3 (Train) -->
+<div class="flex items-center justify-between p-4 bg-surface-container-high/40 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/10 flex items-center justify-center border border-secondary-container/20">
+<span class="material-symbols-outlined text-secondary" data-icon="train">train</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-on-surface">Rajdhani Exp</h3>
+<p class="font-metadata text-metadata text-on-surface-variant">Platform 4 • 9 min walk</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-2 bg-secondary-container/20 px-3 py-1.5 rounded-lg border border-secondary/30">
+<div class="w-2 h-2 rounded-full bg-secondary pulse"></div>
+<span class="font-label-eta text-label-eta text-secondary-fixed-dim">12:00</span>
+</div>
+<span class="font-metadata text-[10px] text-secondary/70 mt-1 uppercase tracking-widest">ON TIME</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-low dark:bg-surface-container-low border-t border-outline-variant/20 flex justify-around items-center h-touch-target-min pb-safe px-gutter shadow-lg">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-primary-container/10 rounded-xl px-3 py-1 hover:text-primary-fixed-dim transition-all active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-metadata text-metadata">Home</span>
+</a>
+<!-- Explore -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-metadata text-metadata">Explore</span>
+</a>
+<!-- Journeys -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="directions_transit">directions_transit</span>
+<span class="font-metadata text-metadata">Journeys</span>
+</a>
+<!-- Alerts -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-90 duration-200 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-metadata text-metadata">Alerts</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for bottom sheet drag simulation (visual only)
+        const sheet = document.querySelector('.bottom-sheet');
+        let isExpanded = false;
+
+        sheet.addEventListener('click', () => {
+            if (!isExpanded) {
+                sheet.style.height = '85vh';
+                isExpanded = true;
+            } else {
+                sheet.style.height = '50vh';
+                isExpanded = false;
+            }
+        });
+
+        // Simple Countdown Logic Simulation for ETA Chips
+        function updateETAs() {
+            const etas = document.querySelectorAll('.text-label-eta');
+            etas.forEach(eta => {
+                let text = eta.textContent;
+                if (text.includes(':')) {
+                    let [min, sec] = text.split(':').map(Number);
+                    if (sec > 0) {
+                        sec--;
+                    } else if (min > 0) {
+                        min--;
+                        sec = 59;
+                    }
+                    eta.textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+                }
+            });
+        }
+        setInterval(updateETAs, 1000);
+    </script>
+</body></html>

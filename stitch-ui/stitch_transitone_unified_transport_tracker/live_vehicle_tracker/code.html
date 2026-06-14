@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitOne - Live Vehicle Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "inverse-surface": "#dde3e7",
+                "surface-container-lowest": "#080f12",
+                "surface": "#0e1417",
+                "on-error-container": "#ffdad6",
+                "primary-fixed-dim": "#3cd7ff",
+                "error-container": "#93000a",
+                "surface-container-high": "#242b2e",
+                "on-primary-container": "#00586b",
+                "on-surface-variant": "#bbc9cf",
+                "on-tertiary-fixed-variant": "#604100",
+                "surface-tint": "#3cd7ff",
+                "on-secondary-fixed-variant": "#354767",
+                "surface-container": "#1a2123",
+                "outline": "#859398",
+                "inverse-primary": "#00677e",
+                "secondary-fixed": "#d6e3ff",
+                "inverse-on-surface": "#2b3134",
+                "tertiary-container": "#feb528",
+                "on-secondary": "#1e304f",
+                "on-secondary-container": "#a3b6db",
+                "secondary-fixed-dim": "#b5c7ed",
+                "secondary-container": "#354767",
+                "on-tertiary-container": "#6c4900",
+                "primary": "#a8e8ff",
+                "on-primary-fixed": "#001f27",
+                "on-primary-fixed-variant": "#004e5f",
+                "tertiary-fixed": "#ffdeae",
+                "secondary": "#b5c7ed",
+                "error": "#ffb4ab",
+                "on-secondary-fixed": "#061b39",
+                "background": "#0e1417",
+                "on-background": "#dde3e7",
+                "primary-container": "#00d4ff",
+                "on-primary": "#003642",
+                "surface-container-highest": "#2f3639",
+                "outline-variant": "#3c494e",
+                "on-error": "#690005",
+                "tertiary": "#ffd9a1",
+                "surface-bright": "#333a3d",
+                "surface-dim": "#0e1417",
+                "on-surface": "#dde3e7",
+                "on-tertiary-fixed": "#281900",
+                "tertiary-fixed-dim": "#ffba3d",
+                "primary-fixed": "#b4ebff",
+                "surface-container-low": "#161d1f",
+                "on-tertiary": "#432c00",
+                "surface-variant": "#2f3639"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "sheet-full": "95vh",
+                "touch-target-min": "44px",
+                "unit": "4px",
+                "sheet-peek": "80px",
+                "margin-edge": "16px",
+                "sheet-half": "50vh",
+                "gutter": "12px"
+            },
+            "fontFamily": {
+                "body-md": ["Inter"],
+                "metadata": ["Inter"],
+                "label-eta": ["JetBrains Mono"],
+                "title-sm": ["Inter"],
+                "display-lg": ["Inter"],
+                "headline-md": ["Inter"],
+                "label-data": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "metadata": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                "label-eta": ["20px", {"lineHeight": "1.0", "fontWeight": "700"}],
+                "title-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                "display-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "label-data": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .pulse-amber {
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            animation: pulse-amber 2s infinite;
+        }
+
+        @keyframes pulse-amber {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        .map-glow {
+            filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.3));
+        }
+
+        .glass-panel {
+            background: rgba(22, 29, 31, 0.85);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(60, 73, 78, 0.4);
+        }
+
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00d4ff;
+        }
+        
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary/30 overflow-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 flex items-center justify-between px-margin-edge h-14">
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-surface-container-highest/50 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-label-eta text-label-eta tracking-tighter text-primary">TransitOne</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-data text-label-data bg-surface-container-highest px-3 py-1 rounded-full text-on-surface-variant uppercase tracking-widest border border-outline-variant/20">Live</span>
+<button class="p-2 hover:bg-surface-container-highest/50 rounded-full transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">share</span>
+</button>
+</div>
+</header>
+<!-- Map Canvas (Background) -->
+<main class="fixed inset-0 z-0">
+<div class="w-full h-full grayscale opacity-40 brightness-75 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/77.5946,12.9716,13/1000x1000?access_token=pk.eyJ1IjoiZGVzaWduZXIiLCJhIjoiY2s1eHNidjVjMGx5bjNrbzZic3o5dzEwNyJ9._R_N_X_X_X_X_X_X_X_X')] bg-cover bg-center" data-location="Bengaluru City Center" style=""></div>
+<!-- Live Vehicle Marker (Amber) -->
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
+<div class="bg-[#F59E0B] p-2 rounded-lg shadow-xl pulse-amber">
+<span class="material-symbols-outlined text-surface-container-lowest" style="font-variation-settings: 'FILL' 1;">directions_bus</span>
+</div>
+<div class="mt-2 bg-surface-container-highest/90 backdrop-blur-sm px-2 py-0.5 rounded border border-outline-variant/50">
+<span class="font-label-data text-[10px] text-white">BUS 212</span>
+</div>
+</div>
+<!-- Floating Map Controls -->
+<div class="absolute right-4 top-20 flex flex-col gap-3 z-20">
+<button class="w-11 h-11 bg-surface-container-high rounded-xl flex items-center justify-center border border-outline-variant/30 map-glow">
+<span class="material-symbols-outlined text-primary">my_location</span>
+</button>
+<button class="w-11 h-11 bg-surface-container-high rounded-xl flex items-center justify-center border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface-variant">layers</span>
+</button>
+</div>
+</main>
+<!-- Bottom Sheet UI -->
+<div class="fixed inset-x-0 bottom-0 z-40 glass-panel rounded-t-[32px] transition-all duration-500 ease-out h-[450px]" id="bottom-sheet">
+<!-- Pull Handle -->
+<div class="flex justify-center py-4 cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1.5 bg-outline-variant/50 rounded-full"></div>
+</div>
+<div class="px-margin-edge h-full flex flex-col gap-6">
+<!-- Route Header -->
+<div class="flex justify-between items-start">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Bus 212</h2>
+<p class="font-body-md text-on-surface-variant">Towards <span class="text-on-surface font-semibold">Central Silk Board</span></p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="font-label-data text-label-data text-on-tertiary-container bg-tertiary-container/20 px-3 py-1 rounded-full">Amber Grade • 2.4km Left</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-primary-container text-sm">groups</span>
+<div class="w-24 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-2/3 h-full bg-primary-container"></div>
+</div>
+<span class="font-metadata text-metadata text-on-surface-variant">Filling</span>
+</div>
+</div>
+</div>
+<!-- Get Off Alert Toggle -->
+<div class="flex items-center justify-between p-4 bg-primary-container/5 border border-primary-container/20 rounded-2xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container">notifications_active</span>
+</div>
+<div>
+<p class="font-title-sm text-title-sm text-primary">Get-off alert</p>
+<p class="font-metadata text-metadata text-on-surface-variant">Notify me 500m before the stop</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-12 h-6 bg-surface-container-highest rounded-full toggle-label transition-colors">
+<div class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full toggle-dot transition-transform"></div>
+</div>
+</label>
+</div>
+<!-- Next Stops List -->
+<div class="flex-1 overflow-y-auto no-scrollbar pb-20">
+<h3 class="font-metadata text-metadata text-outline uppercase tracking-widest mb-4">Upcoming Stops</h3>
+<div class="relative space-y-0">
+<!-- Progress Rail -->
+<div class="absolute left-6 top-3 bottom-12 w-0.5 bg-outline-variant/30 z-0"></div>
+<!-- Stop 1: Next Stop (Active) -->
+<div class="relative z-10 flex items-start gap-4 pb-8">
+<div class="mt-1 w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20 ml-[20px]"></div>
+<div class="flex-1 flex justify-between items-center">
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Indiranagar Metro</h4>
+<p class="font-metadata text-metadata text-on-surface-variant">450m • Platform 2</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="font-label-eta text-label-eta text-error">1m</span>
+<span class="font-label-data text-[10px] text-error/70 uppercase">Urgent</span>
+</div>
+</div>
+</div>
+<!-- Stop 2 -->
+<div class="relative z-10 flex items-start gap-4 pb-8">
+<div class="mt-2 w-2 h-2 rounded-full bg-outline-variant/50 ml-[20.5px]"></div>
+<div class="flex-1 flex justify-between items-center">
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface-variant">CMH Road Junction</h4>
+<p class="font-metadata text-metadata text-outline">1.2km away</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="font-label-eta text-label-eta text-tertiary-container">3m</span>
+<span class="font-label-data text-[10px] text-on-surface-variant uppercase">Normal</span>
+</div>
+</div>
+</div>
+<!-- Stop 3 -->
+<div class="relative z-10 flex items-start gap-4 pb-8">
+<div class="mt-2 w-2 h-2 rounded-full bg-outline-variant/50 ml-[20.5px]"></div>
+<div class="flex-1 flex justify-between items-center">
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface-variant">Domlur Bridge</h4>
+<p class="font-metadata text-metadata text-outline">2.8km away</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="font-label-eta text-label-eta text-primary-container">7m</span>
+<span class="font-label-data text-[10px] text-on-surface-variant uppercase">Steady</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation (Shared Component) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-low border-t border-outline-variant/20 shadow-lg flex justify-around items-center h-touch-target-min pb-safe px-gutter">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-metadata text-metadata">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-metadata text-metadata">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-primary-container/10 rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_transit</span>
+<span class="font-metadata text-metadata">Journeys</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-metadata text-metadata">Alerts</span>
+</a>
+</nav>
+<!-- Overlay Interaction Layer -->
+<script>
+        const sheet = document.getElementById('bottom-sheet');
+        let startY = 0;
+        let startH = 450;
+        let isDragging = false;
+
+        sheet.addEventListener('touchstart', (e) => {
+            if (e.target.closest('.no-scrollbar')) return;
+            startY = e.touches[0].clientY;
+            startH = sheet.offsetHeight;
+            isDragging = true;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const deltaY = startY - e.touches[0].clientY;
+            const newHeight = Math.min(window.innerHeight * 0.95, Math.max(120, startH + deltaY));
+            sheet.style.height = `${newHeight}px`;
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+            const currentHeight = sheet.offsetHeight;
+            if (currentHeight > window.innerHeight * 0.7) {
+                sheet.style.height = '95vh';
+            } else if (currentHeight > 300) {
+                sheet.style.height = '450px';
+            } else {
+                sheet.style.height = '120px';
+            }
+        });
+
+        // Simulating Live Countdown
+        setInterval(() => {
+            const etas = document.querySelectorAll('.font-label-eta');
+            etas.forEach(eta => {
+                let current = parseInt(eta.innerText);
+                if(Math.random() > 0.95 && current > 1) {
+                    eta.innerText = (current - 1) + 'm';
+                }
+            });
+        }, 5000);
+    </script>
+</body></html>

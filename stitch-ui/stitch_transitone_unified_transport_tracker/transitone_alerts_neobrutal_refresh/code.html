@@ -1,0 +1,282 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>TransitOne | Alerts &amp; Disruptions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        /* Custom scrollbar for high density layout */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e1417;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #303639;
+            border: 2px solid #0e1417;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3cd7ff;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#303639",
+                        "on-primary": "#003642",
+                        "on-primary-fixed-variant": "#004e5f",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#00586b",
+                        "on-background": "#dee3e7",
+                        "on-tertiary-fixed": "#00201c",
+                        "outline": "#859398",
+                        "background": "#0e1417",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#252b2e",
+                        "surface-container-lowest": "#090f12",
+                        "surface-dim": "#0e1417",
+                        "primary-fixed": "#b4ebff",
+                        "on-secondary-container": "#5b3800",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "surface-container-low": "#161c20",
+                        "on-secondary": "#472a00",
+                        "tertiary-fixed-dim": "#4fdbc8",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#71f8e4",
+                        "inverse-on-surface": "#2b3135",
+                        "primary-fixed-dim": "#3cd7ff",
+                        "surface-container": "#1a2024",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "outline-variant": "#3c494e",
+                        "primary-container": "#00d4ff",
+                        "on-surface": "#dee3e7",
+                        "on-surface-variant": "#bbc9cf",
+                        "inverse-surface": "#dee3e7",
+                        "secondary-fixed": "#ffddb8",
+                        "tertiary-container": "#4ad7c4",
+                        "primary": "#a8e8ff",
+                        "on-primary-fixed": "#001f27",
+                        "on-tertiary": "#003731",
+                        "surface-tint": "#3cd7ff",
+                        "on-error": "#690005",
+                        "inverse-primary": "#00677e",
+                        "secondary-container": "#ee9800",
+                        "secondary": "#ffb95f",
+                        "surface": "#0e1417",
+                        "surface-bright": "#343a3d",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "on-tertiary-container": "#005a51",
+                        "on-secondary-fixed": "#2a1700",
+                        "tertiary": "#6cf4e0",
+                        "surface-variant": "#303639"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "stack-lg": "32px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                        "label-caps": ["12px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "code-md": ["14px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen pb-24">
+<!-- TopAppBar Navigation -->
+<header class="bg-surface/80 backdrop-blur-xl text-primary font-headline-lg-mobile text-headline-lg-mobile w-full top-0 sticky border-b-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center px-margin-mobile py-4 w-full z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">directions_bus</span>
+<h1 class="font-display text-headline-lg-mobile font-black text-primary uppercase tracking-tighter">TRANSITONE</h1>
+</div>
+<button class="hover:bg-primary/10 transition-colors active:translate-x-[2px] active:translate-y-[2px] active:shadow-none p-2">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</header>
+<main class="max-w-4xl mx-auto px-gutter pt-8">
+<!-- Header Section -->
+<section class="mb-stack-lg">
+<div class="flex items-end justify-between border-b-2 border-black pb-4">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest block mb-1">Status Center</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Network Alerts</h2>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-high border-2 border-black p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:text-primary transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none" id="toggleEmpty">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Alert Feed Canvas -->
+<div class="space-y-6" id="alertFeed">
+<!-- Critical Alert -->
+<div class="glass-panel relative bg-surface-container/80 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group overflow-hidden transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+<!-- Color Strip -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="p-6 flex flex-col md:flex-row gap-6">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-error-container border-2 border-black flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-4xl" style="font-variation-settings: 'FILL' 1;">subway</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps text-error border border-error px-2 py-0.5">CRITICAL DISRUPTION</span>
+<span class="font-code-md text-code-md text-on-surface-variant">2m ago</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">Line 4: Northbound Suspended</h3>
+<p class="text-on-surface-variant font-body-sm mb-4">Signal failure at Central Station. Maintenance crews are on-site. No service between Oak Park and Downtown until further notice.</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-highest border-2 border-black px-3 py-1 font-code-md text-code-md">Bus Bridge Active</span>
+<span class="bg-surface-container-highest border-2 border-black px-3 py-1 font-code-md text-code-md">+45min Delay</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Warning Alert -->
+<div class="glass-panel relative bg-surface-container/80 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group overflow-hidden transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<div class="p-6 flex flex-col md:flex-row gap-6">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-secondary-container border-2 border-black flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl" style="font-variation-settings: 'FILL' 1;">directions_bus</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps text-secondary border border-secondary px-2 py-0.5">MAJOR DELAY</span>
+<span class="font-code-md text-code-md text-on-surface-variant">14m ago</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">Route 102: Congestion Diversion</h3>
+<p class="text-on-surface-variant font-body-sm mb-4">Heavy traffic on Broadway causing 20-minute delays. Buses are diverting via 5th Ave. Missing stops: 12th St to 24th St.</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-highest border-2 border-black px-3 py-1 font-code-md text-code-md">Route Diverted</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Minor Info Alert -->
+<div class="glass-panel relative bg-surface-container/80 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group overflow-hidden transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="p-6 flex flex-col md:flex-row gap-6">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 bg-tertiary-container border-2 border-black flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-container text-4xl" style="font-variation-settings: 'FILL' 1;">train</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps text-tertiary border border-tertiary px-2 py-0.5">PLANED WORK</span>
+<span class="font-code-md text-code-md text-on-surface-variant">1h ago</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">Weekend Track Maintenance</h3>
+<p class="text-on-surface-variant font-body-sm mb-4">Regional Express tracks will undergo scheduled maintenance starting Friday 10 PM. Expect modified frequency of 30 mins.</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-highest border-2 border-black px-3 py-1 font-code-md text-code-md">Starts Oct 12</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default) -->
+<div class="hidden py-24 flex flex-col items-center text-center" id="emptyState">
+<div class="relative mb-8">
+<div class="w-48 h-48 bg-primary/20 border-4 border-black rounded-full flex items-center justify-center shadow-[8px_8px_0px_0px_rgba(168,232,255,1)]">
+<span class="material-symbols-outlined text-primary text-8xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="absolute -top-4 -right-4 bg-secondary border-2 border-black px-4 py-2 rotate-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<span class="font-label-caps text-black">NO ISSUES</span>
+</div>
+</div>
+<h3 class="font-display text-headline-lg font-black uppercase text-primary mb-4 tracking-tight">All clear</h3>
+<p class="max-w-xs text-on-surface-variant font-body-lg">The entire network is running smoothly. No disruptions or alerts currently active.</p>
+<button class="mt-8 bg-primary text-black border-2 border-black px-8 py-4 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all uppercase tracking-tighter" onclick="window.location.reload()">Refresh System</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container/90 backdrop-blur-md border-t-4 border-black shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex justify-around items-center w-full px-gutter pb-6 pt-2">
+<!-- Active: Alerts -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="{{DATA:SCREEN:SCREEN_5}}">
+<span class="material-symbols-outlined">sensors</span>
+<span class="font-label-caps text-label-caps">Live</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="{{DATA:SCREEN:SCREEN_8}}">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-caps text-label-caps">Routes</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-none border-2 border-black p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="{{DATA:SCREEN:SCREEN_3}}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-label-caps text-label-caps">Alerts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="{{DATA:SCREEN:SCREEN_35}}">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-caps text-label-caps">Saved</span>
+</a>
+</div>
+</nav>
+<!-- Floating Action Button (Only context relevant for Alerts: Report Issue) -->
+<button class="fixed right-6 bottom-28 w-16 h-16 bg-primary text-on-primary border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all z-40">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">add_alert</span>
+</button>
+<script>
+        // Simple logic to toggle empty state for demo purposes
+        const toggleBtn = document.getElementById('toggleEmpty');
+        const feed = document.getElementById('alertFeed');
+        const empty = document.getElementById('emptyState');
+        
+        toggleBtn.addEventListener('click', () => {
+            if (feed.classList.contains('hidden')) {
+                feed.classList.remove('hidden');
+                empty.classList.add('hidden');
+            } else {
+                feed.classList.add('hidden');
+                empty.classList.remove('hidden');
+            }
+        });
+    </script>
+
+
+</body></html>

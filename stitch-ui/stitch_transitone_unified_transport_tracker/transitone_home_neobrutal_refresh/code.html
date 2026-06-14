@@ -1,0 +1,280 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>TransitOne Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#303639",
+                    "on-primary": "#003642",
+                    "on-primary-fixed-variant": "#004e5f",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#00586b",
+                    "on-background": "#dee3e7",
+                    "on-tertiary-fixed": "#00201c",
+                    "outline": "#859398",
+                    "background": "#0e1417",
+                    "error-container": "#93000a",
+                    "surface-container-high": "#252b2e",
+                    "surface-container-lowest": "#090f12",
+                    "surface-dim": "#0e1417",
+                    "primary-fixed": "#b4ebff",
+                    "on-secondary-container": "#5b3800",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "surface-container-low": "#161c20",
+                    "on-secondary": "#472a00",
+                    "tertiary-fixed-dim": "#4fdbc8",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed": "#71f8e4",
+                    "inverse-on-surface": "#2b3135",
+                    "primary-fixed-dim": "#3cd7ff",
+                    "surface-container": "#1a2024",
+                    "on-tertiary-fixed-variant": "#005048",
+                    "outline-variant": "#3c494e",
+                    "primary-container": "#00d4ff",
+                    "on-surface": "#dee3e7",
+                    "on-surface-variant": "#bbc9cf",
+                    "inverse-surface": "#dee3e7",
+                    "secondary-fixed": "#ffddb8",
+                    "tertiary-container": "#4ad7c4",
+                    "primary": "#a8e8ff",
+                    "on-primary-fixed": "#001f27",
+                    "on-tertiary": "#003731",
+                    "surface-tint": "#3cd7ff",
+                    "on-error": "#690005",
+                    "inverse-primary": "#00677e",
+                    "secondary-container": "#ee9800",
+                    "secondary": "#ffb95f",
+                    "surface": "#0e1417",
+                    "surface-bright": "#343a3d",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-tertiary-container": "#005a51",
+                    "on-secondary-fixed": "#2a1700",
+                    "tertiary": "#6cf4e0",
+                    "surface-variant": "#303639"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "stack-lg": "32px",
+                    "margin-mobile": "16px",
+                    "stack-md": "16px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "code-md": ["JetBrains Mono"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "label-caps": ["12px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "code-md": ["14px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(26, 32, 36, 0.8);
+        backdrop-filter: blur(20px);
+        border: 2px solid #000000;
+        box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+      }
+      .active-press:active {
+        transform: translate(2px, 2px);
+        box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+      }
+      .map-glow {
+        filter: drop-shadow(0 0 8px currentColor);
+      }
+      @keyframes pulse-slow {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.7; }
+      }
+      .animate-pulse-slow {
+        animation: pulse-slow 2s infinite ease-in-out;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen overflow-hidden flex flex-col font-body-lg selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface/80 backdrop-blur-xl border-b-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex justify-between items-center px-margin-mobile py-4 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="directions_bus">directions_bus</span>
+<h1 class="font-display text-headline-lg-mobile font-black text-primary uppercase tracking-tighter">TRANSITONE</h1>
+</div>
+<button class="hover:bg-primary/10 transition-colors p-2 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<main class="flex-1 relative overflow-hidden flex flex-col">
+<!-- Search Bar Section -->
+<div class="absolute top-4 left-0 w-full px-margin-mobile z-40">
+<div class="glass-card w-full max-w-2xl mx-auto flex items-center px-4 py-3 gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-headline-md font-bold text-on-surface w-full placeholder:text-on-surface-variant/50" placeholder="Where to?" type="text">
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-4 py-2 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
+                    GO
+                </button>
+</div>
+</div>
+<!-- Map View (Simulated) -->
+<div class="absolute inset-0 bg-surface-dim z-0">
+<div class="w-full h-full relative overflow-hidden opacity-50">
+<img alt="A high-contrast dark satellite map of a metropolitan grid with neon light trails from city traffic. The visual style is neobrutalist with deep blacks and sharp outlines. Electric cyan and vibrant amber highlights define major arterial roads and transit hubs in the night view." class="w-full h-full object-cover grayscale contrast-125" data-location="New York City" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBlbzYKCAWPEeJn8dekYSZQwgPeVrn1sunIF3LPDjY84GJsbOXZHMuBSPm_OnQyp873wcfuYK1lRjJtk1V-vrFFagRHheEDbw0oGwc2tCUfQ4vVIZUdLmR7KUa800S5fMn9U2kcGPBx9cqg2snCN2XAuPw-cxaAKoX01IrMID_NKQ8-2-aKoX0zxmIw7DGRcYziCI3Uj09lDF3nbC7RbYKwZKwXJRsrsP5KdqfzwPbhNWDBVmu1M8k1Q">
+<!-- Real-time Vehicle Dots -->
+<div class="absolute top-1/3 left-1/4 text-secondary map-glow animate-pulse-slow">
+<span class="material-symbols-outlined text-4xl" data-icon="fiber_manual_record" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+</div>
+<div class="absolute top-1/2 left-1/2 text-tertiary map-glow animate-pulse-slow" style="animation-delay: 0.5s">
+<span class="material-symbols-outlined text-4xl" data-icon="fiber_manual_record" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+</div>
+<div class="absolute bottom-1/3 right-1/4 text-primary-container map-glow animate-pulse-slow" style="animation-delay: 1.2s">
+<span class="material-symbols-outlined text-4xl" data-icon="fiber_manual_record" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+</div>
+</div>
+</div>
+<!-- Near You Drawer -->
+<section class="mt-auto relative z-30 transform translate-y-0 transition-transform duration-500 ease-in-out" id="drawer">
+<div class="glass-card rounded-t-xl border-b-0 shadow-none mx-2 mb-[-4px] pt-2">
+<!-- Handle -->
+<div class="w-12 h-1.5 bg-on-surface-variant/30 mx-auto rounded-full mb-4"></div>
+<div class="px-margin-mobile pb-2">
+<h2 class="font-headline-md text-headline-md text-on-surface uppercase tracking-tight border-b-2 border-black inline-block mb-4">Near You</h2>
+</div>
+<div class="flex gap-4 overflow-x-auto px-margin-mobile pb-32 hide-scrollbar">
+<!-- Arrival Card 1 -->
+<div class="min-w-[280px] glass-card p-4 flex flex-col gap-3 group active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all">
+<div class="flex justify-between items-start">
+<div class="bg-secondary p-2 border-2 border-black">
+<span class="material-symbols-outlined text-on-secondary text-3xl" data-icon="train">train</span>
+</div>
+<span class="font-label-caps text-label-caps bg-black text-secondary px-2 py-1">ON TIME</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">LINE 4 - DOWNTOWN</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Grand Central</h3>
+</div>
+<div class="mt-2 pt-2 border-t-2 border-black/10 flex justify-between items-end">
+<span class="font-code-md text-code-md text-secondary uppercase">Arriving</span>
+<span class="font-display text-4xl font-black text-secondary">03<span class="text-xl">min</span></span>
+</div>
+</div>
+<!-- Arrival Card 2 -->
+<div class="min-w-[280px] glass-card p-4 flex flex-col gap-3 group active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all">
+<div class="flex justify-between items-start">
+<div class="bg-tertiary p-2 border-2 border-black">
+<span class="material-symbols-outlined text-on-tertiary text-3xl" data-icon="directions_bus">directions_bus</span>
+</div>
+<span class="font-label-caps text-label-caps bg-black text-tertiary px-2 py-1">DELAYED</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">B62 - WILLIAMSBURG</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Bedford Ave</h3>
+</div>
+<div class="mt-2 pt-2 border-t-2 border-black/10 flex justify-between items-end">
+<span class="font-code-md text-code-md text-tertiary uppercase">Arriving</span>
+<span class="font-display text-4xl font-black text-tertiary">09<span class="text-xl">min</span></span>
+</div>
+</div>
+<!-- Arrival Card 3 -->
+<div class="min-w-[280px] glass-card p-4 flex flex-col gap-3 group active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all">
+<div class="flex justify-between items-start">
+<div class="bg-primary-container p-2 border-2 border-black">
+<span class="material-symbols-outlined text-on-primary-container text-3xl" data-icon="tram">tram</span>
+</div>
+<span class="font-label-caps text-label-caps bg-black text-primary-container px-2 py-1">ON TIME</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">T2 - WEST END</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Civic Center</h3>
+</div>
+<div class="mt-2 pt-2 border-t-2 border-black/10 flex justify-between items-end">
+<span class="font-code-md text-code-md text-primary-container uppercase">Arriving</span>
+<span class="font-display text-4xl font-black text-primary-container">14<span class="text-xl">min</span></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container/90 backdrop-blur-md border-t-4 border-black shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)] flex justify-around items-center px-gutter pb-6 pt-2">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-none border-2 border-black p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-100" href="{{DATA:SCREEN:SCREEN_5}}">
+<span class="material-symbols-outlined" data-icon="sensors" style="font-variation-settings: 'FILL' 1;">sensors</span>
+<span class="font-label-caps text-label-caps">Live</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="{{DATA:SCREEN:SCREEN_8}}">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-caps text-label-caps">Routes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="{{DATA:SCREEN:SCREEN_3}}">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-label-caps text-label-caps">Alerts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none" href="{{DATA:SCREEN:SCREEN_35}}">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-label-caps text-label-caps">Saved</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for the drawer
+        let lastScrollTop = 0;
+        const drawer = document.getElementById('drawer');
+        
+        window.addEventListener('scroll', function() {
+            let st = window.pageYOffset || document.documentElement.scrollTop;
+            if (st > lastScrollTop) {
+                // Downscroll code
+            } else {
+                // Upscroll code
+            }
+            lastScrollTop = st <= 0 ? 0 : st;
+        }, false);
+
+        // Interaction for arrival cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('click', () => {
+                // Visual feedback or navigation logic could go here
+            });
+        });
+    </script>
+
+
+</body></html>

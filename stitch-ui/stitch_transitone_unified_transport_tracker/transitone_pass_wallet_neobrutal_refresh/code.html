@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0e1417; /* surface-dim from config */
+            color: #dee3e7; /* on-surface */
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .neobrutalist-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+        }
+        .neobrutalist-shadow-lg {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .active-press:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+        }
+        .active-press-sm:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
+        }
+        /* Custom Toggle Switch Style */
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #00d4ff; /* primary-container */
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+            background-color: #001f27; /* on-primary-fixed */
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#1a2024",
+                    "on-surface-variant": "#bbc9cf",
+                    "surface-dim": "#0e1417",
+                    "surface": "#0e1417",
+                    "on-tertiary-fixed-variant": "#005048",
+                    "inverse-on-surface": "#2b3135",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-container-lowest": "#090f12",
+                    "secondary": "#ffb95f",
+                    "on-secondary": "#472a00",
+                    "surface-variant": "#303639",
+                    "primary": "#a8e8ff",
+                    "on-primary-fixed": "#001f27",
+                    "surface-bright": "#343a3d",
+                    "on-primary-container": "#00586b",
+                    "error-container": "#93000a",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#3cd7ff",
+                    "on-tertiary-container": "#005a51",
+                    "on-primary": "#003642",
+                    "surface-container-highest": "#303639",
+                    "surface-container-low": "#161c20",
+                    "on-error": "#690005",
+                    "primary-container": "#00d4ff",
+                    "on-background": "#dee3e7",
+                    "on-tertiary": "#003731",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "outline": "#859398",
+                    "surface-tint": "#3cd7ff",
+                    "on-surface": "#dee3e7",
+                    "tertiary-fixed-dim": "#4fdbc8",
+                    "tertiary": "#6cf4e0",
+                    "outline-variant": "#3c494e",
+                    "surface-container-high": "#252b2e",
+                    "secondary-container": "#ee9800",
+                    "inverse-surface": "#dee3e7",
+                    "primary-fixed": "#b4ebff",
+                    "tertiary-container": "#4ad7c4",
+                    "on-primary-fixed-variant": "#004e5f",
+                    "tertiary-fixed": "#71f8e4",
+                    "on-secondary-container": "#5b3800",
+                    "background": "#0e1417",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#00677e",
+                    "secondary-fixed": "#ffddb8",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-tertiary-fixed": "#00201c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "stack-md": "16px",
+                    "gutter": "16px",
+                    "stack-sm": "8px",
+                    "margin-desktop": "32px",
+                    "unit": "4px",
+                    "stack-lg": "32px"
+            },
+            "fontFamily": {
+                    "label-caps": ["JetBrains Mono"],
+                    "display": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "code-md": ["JetBrains Mono"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "900"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "code-md": ["14px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/80 dark:bg-surface-container/80 backdrop-blur-xl border-b-2 border-black flex justify-between items-center px-margin-mobile py-stack-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform active:translate-x-[2px] active:translate-y-[2px]">menu</button>
+<h1 class="font-display text-headline-lg-mobile font-black tracking-tighter text-on-surface">TransitOne</h1>
+</div>
+<div class="w-10 h-10 border-2 border-black bg-primary-fixed shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhhIjD2cNLrAhPVbmKVpR7k0R20M4RtINbcVrQ8lMYkbkfzId7L1zXxFiRIm_1zg6Us4Q37FKcNI3Vt66eQRxW1K9RGrf0ckyOkU01JjU_zA_Pg2n_a8-nUAJefvVRperQBTeKzwTPEqEWgTnyQ2WYW2Wf4rmiZUe8B7i5408REFTetd_aIZx6oQRZZOdReiH1hwcHLy88tMPFPNifgguDrXen1Ez51S31xg_TEjBhBA3CCWWgrybuzg"/>
+</div>
+</header>
+<main class="flex-1 px-margin-mobile py-stack-lg flex flex-col gap-stack-lg pb-32">
+<!-- SECTION 1: Active Transit Pass -->
+<section class="flex flex-col gap-stack-sm">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-md text-headline-md text-on-surface">Active Pass</h2>
+<span class="font-label-caps text-label-caps text-primary uppercase">Scan to board</span>
+</div>
+<div class="glass-panel bg-surface-variant/40 border-2 border-black neobrutalist-shadow p-6 flex flex-col gap-6 relative overflow-hidden">
+<!-- Decorative background elements -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-tertiary/20 rounded-full blur-3xl"></div>
+<div class="flex justify-between items-start z-10">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">METRO SERVICES</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Monthly Metro Pass</h3>
+</div>
+<div class="bg-tertiary px-3 py-1 border-2 border-black neobrutalist-shadow">
+<span class="font-label-caps text-label-caps text-on-tertiary uppercase">Active</span>
+</div>
+</div>
+<div class="flex gap-6 items-center z-10">
+<div class="bg-white p-3 border-2 border-black neobrutalist-shadow w-32 h-32 flex items-center justify-center">
+<div class="w-full h-full bg-slate-900 flex flex-wrap gap-1 p-1">
+<!-- Mimicked QR pattern -->
+<div class="w-full h-full relative">
+<div class="absolute top-0 left-0 w-4 h-4 border-2 border-white"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-2 border-white"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-2 border-white"></div>
+<div class="grid grid-cols-6 grid-rows-6 gap-0.5 w-full h-full p-2 opacity-80">
+<div class="bg-white"></div><div class="bg-white"></div><div class="bg-transparent"></div><div class="bg-white"></div><div class="bg-transparent"></div><div class="bg-white"></div>
+<div class="bg-transparent"></div><div class="bg-white"></div><div class="bg-white"></div><div class="bg-transparent"></div><div class="bg-white"></div><div class="bg-transparent"></div>
+<div class="bg-white"></div><div class="bg-transparent"></div><div class="bg-white"></div><div class="bg-white"></div><div class="bg-transparent"></div><div class="bg-white"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">EXPIRY DATE</p>
+<p class="font-code-md text-code-md text-on-surface">24 OCT 2024</p>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">PASS ID</p>
+<p class="font-code-md text-code-md text-on-surface">TXN-4882-9012</p>
+</div>
+</div>
+</div>
+<div class="border-t-2 border-black pt-4 z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Valid for unlimited travel on Blue and Green lines.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Digital Wallet -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div class="glass-panel bg-surface-container-high/60 border-2 border-black neobrutalist-shadow p-6 flex flex-col justify-between">
+<div>
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-2">WALLET BALANCE</h2>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-headline-lg font-black text-on-surface">₹</span>
+<span class="font-display text-display font-black text-primary tracking-tighter">1,248.50</span>
+</div>
+</div>
+<div class="mt-6 flex flex-col gap-3">
+<button class="w-full bg-primary-container text-on-primary-fixed py-4 font-headline-md text-headline-md border-2 border-black neobrutalist-shadow active-press uppercase tracking-widest">TOP UP</button>
+<a class="text-center font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center gap-2" href="#">
+                        TRANSACTION HISTORY <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- SECTION 4: Auto-Reload (Beside wallet on desktop) -->
+<div class="glass-panel bg-surface-container-high/60 border-2 border-black neobrutalist-shadow p-6 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md text-on-surface">Auto-Reload</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[200px]">Top up ₹500 automatically when balance drops below ₹100.</p>
+</div>
+<!-- Custom Toggle -->
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-variant border-2 border-black appearance-none cursor-pointer z-10 checked:right-0" id="auto-reload" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant border-2 border-black cursor-pointer" for="auto-reload"></label>
+<style>
+                            .toggle-checkbox:checked { right: 0; left: auto; }
+                            .toggle-checkbox { left: 0; transition: all 0.2s; }
+                        </style>
+</div>
+</div>
+<div class="mt-6 border-t-2 border-black/20 pt-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-6 border-2 border-black bg-on-surface-variant rounded-sm flex items-center px-1">
+<div class="w-2 h-2 bg-white rounded-full"></div>
+</div>
+<span class="font-code-md text-code-md text-on-surface">•••• 8821</span>
+</div>
+<button class="font-label-caps text-label-caps text-primary border-b-2 border-primary">CHANGE</button>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Card Management -->
+<section class="flex flex-col gap-stack-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface">Your Cards</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<!-- Linked Card 1 -->
+<div class="glass-panel bg-surface-variant/20 border-2 border-black neobrutalist-shadow p-4 flex flex-col gap-4 group hover:bg-surface-variant/40 transition-all cursor-pointer active-press-sm">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 bg-[#14B8A6] border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-white">subway</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">#992-X</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">SmartCard Pro</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Linked to Wallet Balance</p>
+</div>
+</div>
+<!-- Linked Card 2 -->
+<div class="glass-panel bg-surface-variant/20 border-2 border-black neobrutalist-shadow p-4 flex flex-col gap-4 group hover:bg-surface-variant/40 transition-all cursor-pointer active-press-sm">
+<div class="flex justify-between items-start">
+<div class="w-10 h-10 bg-[#F59E0B] border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-white">directions_bus</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">#810-Y</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Intercity Bus Pass</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Expires in 12 days</p>
+</div>
+</div>
+<!-- Add New Card -->
+<button class="border-2 border-dashed border-outline-variant p-4 flex flex-col items-center justify-center gap-2 hover:bg-surface-container-high/40 transition-all group">
+<div class="w-10 h-10 border-2 border-black bg-surface-bright flex items-center justify-center group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-on-surface group-hover:text-on-primary">add</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Add New Card</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/80 dark:bg-surface-container/80 backdrop-blur-xl border-t-2 border-black flex justify-around items-center px-2 py-3 pb-safe shadow-[0px_-4px_0px_0px_rgba(0,0,0,1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant grayscale" href="#">
+<span class="material-symbols-outlined">satellite_alt</span>
+<span class="font-label-caps text-label-caps uppercase">Live</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant grayscale" href="#">
+<span class="material-symbols-outlined">directions_bus</span>
+<span class="font-label-caps text-label-caps uppercase">Routes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant grayscale" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-label-caps text-label-caps uppercase">Alerts</span>
+</a>
+<!-- ACTIVE TAB: Saved/Wallet context -->
+<a class="flex flex-col items-center justify-center bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-4 py-1 active:translate-y-1 active:shadow-none transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-caps text-label-caps uppercase">Saved</span>
+</a>
+</nav>
+<!-- Background Shader for Atmosphere -->
+<div class="fixed inset-0 -z-10 opacity-30 pointer-events-none">
+
+</div>
+</body></html>
