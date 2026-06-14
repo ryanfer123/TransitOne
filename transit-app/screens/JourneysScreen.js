@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator,
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Feather, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import MapView, { UrlTile, Polyline, Marker } from 'react-native-maps';
+import MapView, { UrlTile, Polyline, Marker } from '../components/Map';
 
+const API_HOST = Platform.OS === 'web' ? 'localhost' : '192.168.1.5';
 const modeIcons = { BUS: 'bus', METRO: 'subway', TRAIN: 'train', WALK: 'walk' };
 const modeColors = { BUS: '#ffb95f', METRO: '#a8e8ff', TRAIN: '#6cf4e0', WALK: '#a8e8ff' };
 
@@ -26,7 +27,7 @@ export default function JourneysScreen() {
     if (!origin || !destination) return;
     setLoading(true);
     try {
-      const response = await fetch(`http://192.168.1.7:3000/api/journeys?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`);
+      const response = await fetch(`http://${API_HOST}:3000/api/journeys?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`);
       const data = await response.json();
       setRoutes(data.routes || []);
       if (data.routes && data.routes.length > 0) {

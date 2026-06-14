@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../store';
 import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import MapView, { UrlTile, Marker } from 'react-native-maps';
+import MapView, { UrlTile, Marker } from '../components/Map';
 
 const modeIcons = { BUS: 'bus', METRO: 'subway', TRAIN: 'train' };
 const modeColors = { BUS: '#ffb95f', METRO: '#00d4ff', TRAIN: '#6cf4e0' };
@@ -13,10 +13,12 @@ export default function HomeScreen() {
   const { vehicles, searchQuery, setSearchQuery } = useStore();
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
+  const windowWidth = width || 1000;
+  const windowHeight = height || 800;
   const router = useRouter();
 
-  const mapHeight = height * 0.38;
-  const cardWidth = Math.min(width * 0.72, 280);
+  const mapHeight = windowHeight * 0.38;
+  const cardWidth = Math.min(windowWidth * 0.72, 280);
   const TAB_BAR_HEIGHT = 60 + Math.max(insets.bottom, 8);
 
   const filteredVehicles = useMemo(() => {

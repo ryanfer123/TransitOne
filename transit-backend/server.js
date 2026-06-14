@@ -58,12 +58,31 @@ fastify.register(websocket);
 // Unified Transit Schema:
 // Vehicle: { id, mode, routeId, lat, lon, heading, status, occupancy, nextStops: [{ stopId, stopName, eta, status }] }
 
+function futureEta(minutesFromNow) {
+  return Math.floor(Date.now() / 1000) + minutesFromNow * 60;
+}
+
 const mockVehicles = [
-  { id: 'v1', mode: 'BUS', routeId: '19B', lat: 13.0604, lon: 80.2496, heading: 90, status: 'ON_TIME', occupancy: 'CROWDED', speed: 25, nextStops: [] },
-  { id: 'v2', mode: 'BUS', routeId: '21G', lat: 13.0418, lon: 80.2341, heading: 180, status: 'ON_TIME', occupancy: 'MODERATE', speed: 30, nextStops: [] },
-  { id: 'v3', mode: 'METRO', routeId: 'Blue', lat: 13.0102, lon: 80.2158, heading: 220, status: 'ON_TIME', occupancy: 'SEATS_AVAILABLE', speed: 50, nextStops: [] },
-  { id: 'v4', mode: 'METRO', routeId: 'Green', lat: 13.0827, lon: 80.2707, heading: 0, status: 'ON_TIME', occupancy: 'MODERATE', speed: 45, nextStops: [] },
-  { id: 'v5', mode: 'TRAIN', routeId: 'MRTS', lat: 13.0330, lon: 80.2750, heading: 160, status: 'ON_TIME', occupancy: 'CROWDED', speed: 40, nextStops: [] },
+  { id: 'v1', mode: 'BUS', routeId: '19B', lat: 13.0604, lon: 80.2496, heading: 90, status: 'ON_TIME', occupancy: 'CROWDED', speed: 25, nextStops: [
+    { stopId: 's1', stopName: 'T. Nagar', eta: futureEta(3), status: 'ON_TIME' },
+    { stopId: 's2', stopName: 'Mambalam', eta: futureEta(8), status: 'ON_TIME' },
+  ]},
+  { id: 'v2', mode: 'BUS', routeId: '21G', lat: 13.0418, lon: 80.2341, heading: 180, status: 'DELAYED', occupancy: 'MODERATE', speed: 30, nextStops: [
+    { stopId: 's3', stopName: 'Adyar Signal', eta: futureEta(5), status: 'DELAYED' },
+    { stopId: 's4', stopName: 'Besant Nagar', eta: futureEta(12), status: 'ON_TIME' },
+  ]},
+  { id: 'v3', mode: 'METRO', routeId: 'Blue Line', lat: 13.0102, lon: 80.2158, heading: 220, status: 'ON_TIME', occupancy: 'SEATS_AVAILABLE', speed: 50, nextStops: [
+    { stopId: 's5', stopName: 'Guindy', eta: futureEta(2), status: 'ON_TIME' },
+    { stopId: 's6', stopName: 'Alandur', eta: futureEta(5), status: 'ON_TIME' },
+  ]},
+  { id: 'v4', mode: 'METRO', routeId: 'Green Line', lat: 13.0827, lon: 80.2707, heading: 0, status: 'ON_TIME', occupancy: 'MODERATE', speed: 45, nextStops: [
+    { stopId: 's7', stopName: 'Central', eta: futureEta(1), status: 'ON_TIME' },
+    { stopId: 's8', stopName: 'Egmore', eta: futureEta(4), status: 'ON_TIME' },
+  ]},
+  { id: 'v5', mode: 'TRAIN', routeId: 'MRTS', lat: 13.0330, lon: 80.2750, heading: 160, status: 'ON_TIME', occupancy: 'CROWDED', speed: 40, nextStops: [
+    { stopId: 's9', stopName: 'Thiruvanmiyur', eta: futureEta(4), status: 'ON_TIME' },
+    { stopId: 's10', stopName: 'Velachery', eta: futureEta(10), status: 'ON_TIME' },
+  ]},
 ];
 
 // Update vehicle positions every 3s
@@ -72,6 +91,10 @@ setInterval(() => {
     v.lat += (Math.random() - 0.5) * 0.002;
     v.lon += (Math.random() - 0.5) * 0.002;
     v.heading = (v.heading + (Math.random() - 0.5) * 10) % 360;
+    // Refresh ETAs so they stay realistic
+    v.nextStops.forEach((s, i) => {
+      s.eta = Math.floor(Date.now() / 1000) + (i + 1) * (Math.floor(Math.random() * 3) + 2) * 60;
+    });
   });
   
   const message = JSON.stringify({ type: 'VEHICLE_UPDATE', data: mockVehicles });
@@ -245,7 +268,7 @@ fastify.get('/api/auth/me', async (request, reply) => {
 
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000, host: '0.0.0.0' });
+    await fastify.listen({ port: 3000, host: '::' });
     fastify.log.info(`Server listening on ${fastify.server.address().port}`);
   } catch (err) {
     fastify.log.error(err);

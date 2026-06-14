@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import { Stack } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useStore } from '../../store';
+
+const API_BASE = `http://localhost:3000`;
+const WS_URL = `ws://localhost:3000/ws`;
 
 export default function RootLayout() {
   const setVehicles = useStore((state) => state.setVehicles);
@@ -10,20 +13,9 @@ export default function RootLayout() {
 
   useEffect(() => {
     fetchUser();
-    
-    const ws = new WebSocket('ws://192.168.1.7:3000/ws');
-    ws.onopen = () => console.log('Connected to Transit WebSocket');
-    ws.onmessage = (e) => {
-      try {
-        const msg = JSON.parse(e.data);
-        if (msg.type === 'INIT' || msg.type === 'VEHICLE_UPDATE') {
-          setVehicles(msg.data);
-        }
-      } catch (err) {
-        console.error('WebSocket parse error', err);
-      }
-    };
-    return () => ws.close();
+
+    const startMockSimulation = useStore.getState().startMockSimulation;
+    startMockSimulation();
   }, []);
 
   return (
@@ -35,3 +27,4 @@ export default function RootLayout() {
     </SafeAreaProvider>
   );
 }
+
